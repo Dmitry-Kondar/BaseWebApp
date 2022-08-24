@@ -1,19 +1,29 @@
 function showPicture(){
-  // use jQuery ($ is shorthand) to find the div on the page and then change the html
-  // 'rounded-circle' is a bootstrap thing! Check out more here: http://getbootstrap.com/css/
   $("#image").append('<img class="rounded-circle" src="images/high-five.gif"/>');
   $("p").html("High five! You're building your first web app!");
-
-  // jQuery can do a lot of crazy stuff, so make sure to Google around to find out more
 }
 
+function handleSignIn() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    var token = result.credentials.accessToken;
+    var user = result.user;
+    console.log(user.email);
+  }).catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    var email = error.email;
+    var credential = error.credential;
+  })
+}
+
+// THIS FUNCTION IS HERE ONLY FOR FUTURRE REFERENCE!
 // function getweather(searchQurey) {
 //   var url = "https://api.openwethermap.ogr/data/2.5/weather?q="+searchQurey+"&units=imperial&APPID="+apiKey;
-
 //   $(".city").text("");
 //   $(".temp").text("");
 //   $(".error-message").text("");
-
 //   $.ajax(url, {success: function(data) {
 //     console.log(data);
 //     $(".city").text(data.name);
@@ -22,7 +32,6 @@ function showPicture(){
 //     $(".error-message").text("An error occured!");
 //   }})
 // }
-
 // function searchWeather() {
 //   var searchQurey = $(".search").val();
 //   getweather(searchQurey);
